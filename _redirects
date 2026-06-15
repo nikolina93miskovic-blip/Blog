@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en-AU">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+{# ----- Title & description (per page, falls back to site defaults) ----- #}
+<title>{% if title %}{{ title }} — {{ site.name }}{% else %}{{ site.name }} — {{ site.tagline }}{% endif %}</title>
+<meta name="description" content="{{ description or site.description }}">
+<link rel="canonical" href="{{ site.url }}{{ page.url }}">
+
+{# ----- Open Graph (link previews on Facebook, WhatsApp, etc.) ----- #}
+<meta property="og:type" content="{{ ogType or 'website' }}">
+<meta property="og:site_name" content="{{ site.name }}">
+<meta property="og:title" content="{% if title %}{{ title }}{% else %}{{ site.name }}{% endif %}">
+<meta property="og:description" content="{{ description or site.description }}">
+<meta property="og:url" content="{{ site.url }}{{ page.url }}">
+<meta property="og:image" content="{{ site.url }}{{ image or site.defaultOgImage }}">
+
+{# ----- Twitter / X card ----- #}
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="{% if title %}{{ title }}{% else %}{{ site.name }}{% endif %}">
+<meta name="twitter:description" content="{{ description or site.description }}">
+<meta name="twitter:image" content="{{ site.url }}{{ image or site.defaultOgImage }}">
+
+{# ----- Fonts (same as the rest of the site) ----- #}
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..700;1,9..144,300..600&family=Hanken+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+{# ----- Structured data for Google ----- #}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  "name": "{{ site.name }}",
+  "url": "{{ site.url }}",
+  "description": "{{ site.description }}"
+}
+</script>
+{% if ogType == 'article' %}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "{{ title }}",
+  "description": "{{ description }}",
+  "datePublished": "{{ date | isoDate }}",
+  "author": { "@type": "Person", "name": "{{ author or site.author }}" },
+  "publisher": { "@type": "Organization", "name": "{{ site.name }}" },
+  "mainEntityOfPage": "{{ site.url }}{{ page.url }}"
+}
+</script>
+{% endif %}
+
+<style>
+  :root{
+    --ink:#2D352A; --ink-soft:#585F4D; --forest:#3C4D35;
+    --sage:#7C9167; --sage-deep:#4E6A44; --cream:#FBF7EE;
+    --clay:#D6724E; --clay-soft:#E59C7D; --rose:#D88E96; --ochre:#E8B24A;
+    --line:rgba(45,53,42,.13); --maxw:1180px; --readw:720px; --radius:22px;
+    --shadow:0 18px 50px -22px rgba(45,53,42,.42);
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:'Hanken Grotesk',sans-serif;color:var(--ink);background:var(--cream);line-height:1.7;-webkit-font-smoothing:antialiased}
+  a{color:inherit;text-decoration:none}
+  img{max-width:100%;height:auto;display:block}
+  .wrap{max-width:var(--maxw);margin:0 auto;padding:0 28px}
+  h1,h2,h3,h4{font-family:'Fraunces',serif;font-weight:400;line-height:1.1;letter-spacing:-.01em;color:var(--ink)}
+
+  /* ---- Header (matches the main site) ---- */
+  header{position:sticky;top:0;z-index:50;background:rgba(251,247,238,.86);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+  .nav{display:flex;align-items:center;justify-content:space-between;height:74px}
+  .brand{display:flex;align-items:center;gap:11px;font-family:'Fraunces',serif;font-size:21px;letter-spacing:-.01em;color:var(--forest)}
+  .brand b{font-weight:600}
+  .nav-links{display:flex;gap:28px;font-size:14.5px}
+  .nav-links a{color:var(--ink-soft);transition:color .2s}
+  .nav-links a:hover{color:var(--clay)}
+  .nav-cta .btn{display:inline-flex;align-items:center;gap:9px;font-family:'Hanken Grotesk',sans-serif;font-weight:600;font-size:14.5px;padding:12px 22px;border-radius:100px;transition:transform .35s,box-shadow .35s}
+  .btn-primary{background:var(--forest);color:var(--cream)}
+  .btn-primary:hover{transform:translateY(-3px);box-shadow:0 16px 30px -14px rgba(60,77,53,.6)}
+  .btn-primary svg{transition:transform .35s}
+  .btn-primary:hover svg{transform:translateX(4px)}
+  @media(max-width:860px){.nav-links{display:none}}
+
+  /* ---- Footer (matches the main site) ---- */
+  footer{background:var(--forest);color:var(--cream);margin-top:90px;padding:64px 0 34px}
+  footer .brand{color:var(--cream)}
+  .foot-grid{display:grid;grid-template-columns:1.6fr 1fr 1fr;gap:40px}
+  footer p{color:rgba(251,247,238,.72);font-size:14.5px;margin-top:14px;max-width:330px}
+  .foot-col h4{font-family:'Hanken Grotesk';font-size:13px;text-transform:uppercase;letter-spacing:.18em;color:var(--ochre);margin-bottom:18px;font-weight:600}
+  .foot-col a{display:block;color:rgba(251,247,238,.82);font-size:14.5px;margin-bottom:11px;transition:color .2s}
+  .foot-col a:hover{color:var(--cream)}
+  .foot-bottom{display:flex;justify-content:space-between;align-items:center;gap:18px;margin-top:48px;padding-top:24px;border-top:1px solid rgba(251,247,238,.18);font-size:13px;color:rgba(251,247,238,.6);flex-wrap:wrap}
+  .foot-bottom a{color:rgba(251,247,238,.78)}
+  .socials{display:flex;gap:14px}
+  .socials a{color:rgba(251,247,238,.78)}
+  @media(max-width:760px){.foot-grid{grid-template-columns:1fr;gap:30px}}
+
+  /* ---- Blog listing ---- */
+  .blog-hero{text-align:center;padding:78px 0 26px}
+  .eyebrow{font-family:'Hanken Grotesk',sans-serif;text-transform:uppercase;letter-spacing:.28em;font-size:12px;font-weight:600;color:var(--clay);margin-bottom:18px}
+  .blog-hero h1{font-size:clamp(40px,6vw,68px)}
+  .blog-hero .lead{max-width:560px;margin:18px auto 0;color:var(--ink-soft);font-size:17px}
+  .post-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(330px,1fr));gap:30px;padding:46px 0 10px}
+  .card{background:#fff;border:1px solid var(--line);border-radius:var(--radius);overflow:hidden;transition:transform .35s,box-shadow .35s;display:flex;flex-direction:column}
+  .card:hover{transform:translateY(-5px);box-shadow:var(--shadow)}
+  .card .cover{aspect-ratio:16/10;background:linear-gradient(135deg,var(--sage) 0%,var(--sage-deep) 100%);object-fit:cover;width:100%}
+  .card .body{padding:26px 26px 30px;display:flex;flex-direction:column;flex:1}
+  .card .meta{font-size:12.5px;letter-spacing:.04em;color:var(--ink-soft);margin-bottom:11px}
+  .card h2{font-size:24px;line-height:1.16;margin-bottom:10px}
+  .card p{font-size:14.5px;color:var(--ink-soft);margin-bottom:20px;flex:1}
+  .card .more{font-family:'Hanken Grotesk';font-weight:600;font-size:13.5px;color:var(--clay);display:inline-flex;align-items:center;gap:7px}
+  .empty{padding:60px 0 20px;text-align:center;color:var(--ink-soft)}
+
+  /* ---- Single article ---- */
+  article.post{padding:60px 0 10px}
+  .post-head{max-width:var(--readw);margin:0 auto;text-align:center}
+  .post-head .meta{font-size:13px;letter-spacing:.05em;color:var(--ink-soft);margin-bottom:16px}
+  .post-head h1{font-size:clamp(34px,5vw,54px);line-height:1.08}
+  .post-head .standfirst{margin-top:20px;font-family:'Fraunces',serif;font-style:italic;font-size:clamp(19px,2.4vw,23px);color:var(--forest);line-height:1.4}
+  .post-cover{max-width:980px;margin:46px auto 0;border-radius:var(--radius);overflow:hidden;box-shadow:var(--shadow)}
+  .prose{max-width:var(--readw);margin:46px auto 0;font-size:17.5px}
+  .prose > * + *{margin-top:22px}
+  .prose h2{font-size:30px;margin-top:48px}
+  .prose h3{font-size:23px;margin-top:36px}
+  .prose p,.prose li{color:var(--ink);line-height:1.75}
+  .prose a{color:var(--clay);text-decoration:underline;text-underline-offset:3px}
+  .prose ul,.prose ol{padding-left:24px}
+  .prose li{margin-top:8px}
+  .prose blockquote{border-left:3px solid var(--clay);padding:6px 0 6px 22px;font-family:'Fraunces',serif;font-style:italic;font-size:22px;color:var(--forest);line-height:1.4}
+  .prose strong{font-weight:600}
+  .prose hr{border:none;border-top:1px solid var(--line);margin:40px 0}
+  .prose img{border-radius:14px;margin:30px auto}
+
+  /* CTA block under each post */
+  .post-cta{max-width:var(--readw);margin:64px auto 0;background:var(--forest);color:var(--cream);border-radius:var(--radius);padding:44px 40px;text-align:center}
+  .post-cta h3{color:var(--cream);font-size:28px}
+  .post-cta p{margin:12px auto 24px;max-width:430px;color:rgba(251,247,238,.82);font-size:15.5px}
+  .post-cta .btn{display:inline-flex;align-items:center;gap:9px;background:var(--ochre);color:var(--ink);font-family:'Hanken Grotesk';font-weight:600;font-size:15px;padding:14px 28px;border-radius:100px;transition:transform .35s}
+  .post-cta .btn:hover{transform:translateY(-3px)}
+  .back-link{display:block;max-width:var(--readw);margin:40px auto 0;font-size:14px;color:var(--ink-soft)}
+  .back-link:hover{color:var(--clay)}
+</style>
+</head>
+<body>
+
+<header>
+  <nav class="nav wrap">
+    <a href="/" class="brand">
+      <svg width="26" height="26" viewBox="0 0 24 24" fill="none"><path d="M12 23v-7" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><path d="M12 17c-3 0-5-1.4-5-3.8 2.4 0 5 1 5 3.8Z" stroke="currentColor" stroke-width="1.3" stroke-linejoin="round"/><g stroke="currentColor" stroke-width="1.3"><ellipse cx="12" cy="6" rx="2.3" ry="3.8" transform="rotate(0 12 10.5)"/><ellipse cx="12" cy="6" rx="2.3" ry="3.8" transform="rotate(60 12 10.5)"/><ellipse cx="12" cy="6" rx="2.3" ry="3.8" transform="rotate(120 12 10.5)"/><ellipse cx="12" cy="6" rx="2.3" ry="3.8" transform="rotate(180 12 10.5)"/><ellipse cx="12" cy="6" rx="2.3" ry="3.8" transform="rotate(240 12 10.5)"/><ellipse cx="12" cy="6" rx="2.3" ry="3.8" transform="rotate(300 12 10.5)"/></g><circle cx="12" cy="10.5" r="2.4" fill="currentColor"/></svg>
+      <span>Bloom &amp; Grow <b>Learning</b></span>
+    </a>
+    <div class="nav-links">
+      <a href="/#approach">Approach</a>
+      <a href="/#offers">Services</a>
+      <a href="/#how">How it works</a>
+      <a href="/blog/">Journal</a>
+      <a href="/#about">About</a>
+      <a href="/portal.html">Members</a>
+    </div>
+    <div class="nav-cta">
+      <a href="/#booking" class="btn btn-primary">Book a free call
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M5 12h14m-6-6 6 6-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </a>
+    </div>
+  </nav>
+</header>
+
+<main>
+  {{ content | safe }}
+</main>
+
+<footer>
+  <div class="wrap">
+    <div class="foot-grid">
+      <div>
+        <a href="/" class="brand">
+          <svg width="26" height="26" viewBox="0 0 24 24" fill="none" style="color:var(--ochre)"><path d="M12 23v-7" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><path d="M12 17c-3 0-5-1.4-5-3.8 2.4 0 5 1 5 3.8Z" stroke="currentColor" stroke-width="1.3" stroke-linejoin="round"/><g stroke="currentColor" stroke-width="1.3"><ellipse cx="12" cy="6" rx="2.3" ry="3.8" transform="rotate(0 12 10.5)"/><ellipse cx="12" cy="6" rx="2.3" ry="3.8" transform="rotate(60 12 10.5)"/><ellipse cx="12" cy="6" rx="2.3" ry="3.8" transform="rotate(120 12 10.5)"/><ellipse cx="12" cy="6" rx="2.3" ry="3.8" transform="rotate(180 12 10.5)"/><ellipse cx="12" cy="6" rx="2.3" ry="3.8" transform="rotate(240 12 10.5)"/><ellipse cx="12" cy="6" rx="2.3" ry="3.8" transform="rotate(300 12 10.5)"/></g><circle cx="12" cy="10.5" r="2.4" fill="currentColor"/></svg>
+          <span>Bloom &amp; Grow <b>Learning</b></span>
+        </a>
+        <p>Calm, confident homeschooling support for Australian families. Personalised plans, real skills, and a teacher in your corner.</p>
+      </div>
+      <div class="foot-col">
+        <h4>Explore</h4>
+        <a href="/#approach">Approach</a>
+        <a href="/#offers">Services</a>
+        <a href="/#how">How it works</a>
+        <a href="/blog/">Journal</a>
+        <a href="/#faq">FAQ</a>
+        <a href="/portal.html">Members area</a>
+      </div>
+      <div class="foot-col">
+        <h4>Get in touch</h4>
+        <a href="/#booking">Book a free call</a>
+        <a href="{{ site.whatsapp }}" target="_blank" rel="noopener">WhatsApp community</a>
+        <a href="mailto:{{ site.email }}">{{ site.email }}</a>
+      </div>
+    </div>
+    <div class="foot-bottom">
+      <p>© <span id="year"></span> Bloom &amp; Grow Learning. Made with care. · <a href="/privacy.html">Privacy Policy</a></p>
+      <div class="socials">
+        <a href="{{ site.social.instagram }}" aria-label="Instagram"><svg width="18" height="18" viewBox="0 0 24 24" fill="none"><rect x="3" y="3" width="18" height="18" rx="5" stroke="currentColor" stroke-width="1.6"/><circle cx="12" cy="12" r="4" stroke="currentColor" stroke-width="1.6"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor"/></svg></a>
+        <a href="{{ site.social.facebook }}" aria-label="Facebook"><svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M14 8h2V5h-2c-1.7 0-3 1.3-3 3v2H9v3h2v6h3v-6h2l1-3h-3V8c0-.6.4-1 1-1Z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg></a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script>document.getElementById("year").textContent = new Date().getFullYear();</script>
+</body>
+</html>

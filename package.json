@@ -1,0 +1,20 @@
+// Site-wide values used across the blog templates (SEO tags, sitemap, footer).
+// EDIT the url + social handles once your real domain and accounts are live.
+module.exports = {
+  name: "Bloom & Grow Learning",
+  // ⚠️ REPLACE with your real domain (no trailing slash). Used for canonical
+  // URLs, Open Graph link previews, and the sitemap.
+  url: "https://www.bloomandgrowlearning.com",
+  tagline: "Calm, confident homeschooling for Australian families",
+  description:
+    "Personalised home-school term plans, a self-paced parent course, and gentle ongoing support for Australian families. Homeschooling, made calm.",
+  author: "Nikki",
+  email: "bloomandgrowlearning@hotmail.com",
+  whatsapp: "https://chat.whatsapp.com/Gzsk6JSgCkfBLKpAMe2F60",
+  // Default preview image for posts with no cover image set.
+  defaultOgImage: "/assets/og-default.jpg",
+  social: {
+    instagram: "#", // ⚠️ add your Instagram URL
+    facebook: "#", // ⚠️ add your Facebook URL
+  },
+};

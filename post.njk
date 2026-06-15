@@ -1,0 +1,37 @@
+---
+layout: base.njk
+title: Journal
+description: Calm, practical homeschooling notes for Australian families — registration, gentle methods, and finding your rhythm.
+permalink: /blog/index.html
+---
+<section class="blog-hero wrap">
+  <p class="eyebrow">The Journal</p>
+  <h1>Homeschooling, made calm</h1>
+  <p class="lead">Practical, gentle notes for Australian families — from getting registered in your state to finding a rhythm that actually fits your child.</p>
+</section>
+
+<div class="wrap">
+  {% if collections.posts | length %}
+  <div class="post-grid">
+    {% for post in collections.posts %}
+    <a class="card" href="{{ post.url }}">
+      {% if post.data.image %}
+        <img class="cover" src="{{ post.data.image }}" alt="{{ post.data.title }}">
+      {% else %}
+        <div class="cover"></div>
+      {% endif %}
+      <div class="body">
+        <p class="meta">{{ post.date | readableDate }}</p>
+        <h2>{{ post.data.title }}</h2>
+        <p>{{ post.data.description }}</p>
+        <span class="more">Read more
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none"><path d="M5 12h14m-6-6 6 6-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </span>
+      </div>
+    </a>
+    {% endfor %}
+  </div>
+  {% else %}
+  <p class="empty">First posts are on their way — check back soon.</p>
+  {% endif %}
+</div>

@@ -1,0 +1,33 @@
+---
+layout: base.njk
+ogType: article
+---
+<article class="post">
+  <div class="wrap">
+    <header class="post-head">
+      <p class="meta">{{ date | readableDate }} · {{ author or site.author }}</p>
+      <h1>{{ title }}</h1>
+      {% if description %}<p class="standfirst">{{ description }}</p>{% endif %}
+    </header>
+  </div>
+
+  {% if image %}
+  <div class="post-cover wrap" style="padding:0">
+    <img src="{{ image }}" alt="{{ title }}">
+  </div>
+  {% endif %}
+
+  <div class="prose">
+    {{ content | safe }}
+  </div>
+
+  <div class="post-cta">
+    <h3>Not sure where to start?</h3>
+    <p>Book a free 15-minute call and we'll talk through where your family is right now — no pressure, no jargon.</p>
+    <a href="/#booking" class="btn">Book a free call
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M5 12h14m-6-6 6 6-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </a>
+  </div>
+
+  <a href="/blog/" class="back-link">← Back to the journal</a>
+</article>
