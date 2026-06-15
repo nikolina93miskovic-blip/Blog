@@ -1,0 +1,11 @@
+# Netlify build configuration for Bloom & Grow Learning
+# Netlify runs the Eleventy build on every push, so adding a blog post
+# (which the CMS commits to your repo) automatically rebuilds and redeploys
+# the site. You never touch Netlify manually.
+
+[build]
+  command = "npm run build"
+  publish = "_site"
+
+[build.environment]
+  NODE_VERSION = "20"
